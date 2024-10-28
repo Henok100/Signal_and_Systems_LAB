@@ -8,7 +8,7 @@ frequency = 5  # Frequency of 5 Hz for the square wave
 analog_square_wave = np.sign(np.sin(2 * np.pi * frequency * t_analog))  # Generate analog square wave signal
 
 # Digital Signal by Sampling the Analog Square Wave
-sampling_rate = 20  # Set sampling rate for the digital signal
+sampling_rate = 40  # Set sampling rate for the digital signal
 t_digital = np.arange(0, 1, 1/sampling_rate)  # Discrete time points for the digital signal
 digital_square_wave = np.sign(np.sin(2 * np.pi * frequency * t_digital))  # Generate digital square wave by sampling
 
