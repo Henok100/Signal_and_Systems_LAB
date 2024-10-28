@@ -1,60 +1,38 @@
-"""
-Lab Example: Classification of Signals - Continuous-Time and Discrete-Time
-In this example, we will represent and visualize continuous-time and discrete-time signals
-using Python. We will plot both signal types and highlight their differences.
-"""
-
 # Import necessary libraries
-import numpy as np  # For numerical operations
-import matplotlib.pyplot as plt  # For plotting graphs
+import numpy as np  # For mathematical operations
+import matplotlib.pyplot as plt  # For plotting
 
-# Continuous-Time Signal
-# A continuous signal is defined over a continuous range of time (e.g., sin(t))
-# Let's define a continuous-time signal as a sine wave
+# Define the analog signal (continuous sinusoidal wave)
+t_analog = np.linspace(0, 1, 1000)  # Time from 0 to 1 second, with 1000 samples for smoothness
+frequency = 5  # Set the frequency to 5 Hz
+analog_signal = np.sin(2 * np.pi * frequency * t_analog)  # Generate the analog sinusoidal signal
 
-# Time variable for continuous signal (defined over a range with small intervals)
-t_continuous = np.linspace(0, 2 * np.pi, 100)  # Time from 0 to 2π with 100 samples
-# Explanation: np.linspace(start, stop, num) creates an array of 'num' evenly spaced samples 
-# from 'start' to 'stop'.
+# Define the digital signal by sampling the analog signal
+sampling_rate = 20  # Set sampling rate for the digital signal
+t_digital = np.arange(0, 1, 1/sampling_rate)  # Create discrete time points for digital signal
+digital_signal = np.round(np.sin(2 * np.pi * frequency * t_digital))  # Quantize analog values for digital signal
 
-continuous_signal = np.sin(t_continuous)  # Define sine wave as continuous signal
-# Explanation: np.sin(x) computes the sine of x (in radians), where x can be an array.
+# Plot both signals in a single figure with two rows
+plt.figure(figsize=(10, 8))
 
-# Discrete-Time Signal
-# A discrete signal is only defined at specific time intervals (e.g., sin(n) at integer values of n)
-# Let's define a discrete-time signal using sampled points of the sine wave
+# Plot the analog signal in the first subplot (first row)
+plt.subplot(2, 1, 1)  # 2 rows, 1 column, first subplot
+plt.plot(t_analog, analog_signal, label="Analog Signal")
+plt.title("Analog Signal: Continuous Sinusoidal Wave")
+plt.xlabel("Time (s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.legend()
 
-# Time variable for discrete signal (discrete points in time)
-t_discrete = np.arange(0, 2 * np.pi, np.pi / 4)  # Time from 0 to 2π with a step size of π/4
-# Explanation: np.arange(start, stop, step) creates an array of values from 'start' to 'stop' 
-# with increments of 'step'.
+# Plot the digital signal in the second subplot (second row)
+plt.subplot(2, 1, 2)  # 2 rows, 1 column, second subplot
+plt.stem(t_digital, digital_signal, basefmt=" ", label="Digital Signal")
+plt.title("Digital Signal: Quantized Sinusoidal Wave")
+plt.xlabel("Time (s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.legend()
 
-discrete_signal = np.sin(t_discrete)  # Define sine wave as discrete signal
-
-# Plotting the signals
-plt.figure(figsize=(12, 6))  # Set the figure size
-
-# Plot continuous signal
-plt.subplot(2, 1, 1)  # Create a subplot for the first graph (2 rows, 1 column, 1st position)
-plt.plot(t_continuous, continuous_signal, label='Continuous Signal (Sine Wave)')
-plt.title("Continuous-Time Signal")  # Title of the plot
-plt.xlabel("Time")  # Label for x-axis
-plt.ylabel("Amplitude")  # Label for y-axis
-plt.grid(True)  # Show grid
-plt.legend()  # Show legend to identify the signal
-
-# Plot discrete signal
-plt.subplot(2, 1, 2)  # Create a subplot for the second graph (2 rows, 1 column, 2nd position)
-plt.stem(t_discrete, discrete_signal, label='Discrete Signal (Sampled Sine Wave)')
-# Explanation: plt.stem(x, y) creates a stem plot with stems at each (x, y) coordinate. 
-
-
-plt.title("Discrete-Time Signal")  # Title of the plot
-plt.xlabel("Time")  # Label for x-axis
-plt.ylabel("Amplitude")  # Label for y-axis
-plt.grid(True)  # Show grid
-plt.legend()  # Show legend
-
-# Display the plots
-plt.tight_layout()  # Adjust layout to fit all elements
-plt.show()  # Show the plot window
+# Display the combined plot
+plt.tight_layout()  # Adjust layout to prevent overlapping
+plt.show()
